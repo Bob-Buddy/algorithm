@@ -1,6 +1,6 @@
 function testSolution(ex_arr, answer_arr, solution) {
   ex_arr.forEach((ex, idx) => {
-    if (answer_arr[idx]) {
+    if (answer_arr[idx] !== null) {
       try {
         const startTime = performance.now();
         const result = solution(...ex);
