@@ -27,6 +27,15 @@ function testSolution(ex_arr, answer_arr, solution) {
   });
 }
 
+function validateAndRunTest(exNum, testFuncArr, solution) {
+  if (exNum < 1 || exNum > testFuncArr.length) {
+    console.error("존재하지 않는 문제번호입니다. 다시 확인해주세요");
+    return;
+  }
+  testFuncArr[exNum - 1](solution);
+}
+
 module.exports = {
   testSolution,
+  validateAndRunTest,
 };

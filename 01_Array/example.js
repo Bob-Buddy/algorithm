@@ -1,4 +1,4 @@
-const { testSolution } = require("../utils");
+const { testSolution, validateAndRunTest } = require("../utils");
 
 // 1번
 const ex1_1 = [[1, -5, 2, 4, 3]];
@@ -105,7 +105,21 @@ const testEx7 = (solution) => {
   testSolution([ex7_1, ex7_2], [answer7_1, answer7_2], solution);
 };
 
+const testFunctions = [
+  testEx1,
+  testEx2,
+  testEx3,
+  testEx4,
+  testEx5,
+  testEx6,
+  testEx7,
+];
+const testEx = (num, solution) => {
+  validateAndRunTest(num, testFunctions, solution);
+};
+
 module.exports = {
+  testEx,
   testEx1,
   testEx2,
   testEx3,
