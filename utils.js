@@ -2,6 +2,10 @@ function testSolution(ex_arr, answer_arr, solution) {
   ex_arr.forEach((ex, idx) => {
     if (answer_arr[idx] !== null) {
       try {
+        // console.log 무시 (log가 반복되어 쌓이는 현상 방지)
+        const originalConsoleLog = console.log;
+        console.log = () => {};
+
         // 웜업 (JIT 컴파일러 최적화 -> 첫 실행은 최적화가 없기 때문에 상대적으로 느림)
         for (let i = 0; i < 5; i++) {
           solution(...ex);
@@ -23,6 +27,9 @@ function testSolution(ex_arr, answer_arr, solution) {
         const trimmedTimes = times.slice(1, -1);
         const avgTime =
           trimmedTimes.reduce((a, b) => a + b) / trimmedTimes.length;
+
+        // 원래 console.log 복원 (최종 실행 시에만 console.log 출력)
+        console.log = originalConsoleLog;
 
         // 최종 실행 및 정확성 체크
         const result = solution(...ex);
