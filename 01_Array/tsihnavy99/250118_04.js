@@ -41,7 +41,7 @@ const solution2 = (arr) => {
   const secondPattern = [2, 1, 2, 3, 2, 4, 2, 5];
   const thirdPattern = [3, 1, 2, 4, 5];
 
-  arr.forEach((answer, index) => {
+  arr.forEach((answer, index) => { // O(n)
     firstStudent += Number((index + 1) % 5 === answer % 5);
 
     const secondIndex = index % 8;
@@ -85,4 +85,22 @@ testEx(4, solution2);
  *
  * 하지만 두 풀이에 대해 성능차이는 크지 않았고
  * 오히려 평균적으로 solution1이 미세하게 빠른 실행시간을 보였습니다
+ *
+ * + 250118
+ * solution1, 2는 모두 O(n)의 시간복잡도를 갖지만
+ * 실질적으로는 solution2가 연산 횟수가 더 적고
+ * 조건문 분기가 없어 CPU 분기 예측 최적화에 유리하기때문에
+ * 보통은 더 나은 성능을 갖는다고합니다
+ *
+ * 실행 결과에서 solution1이 더 빠른 이유는 아래로 예상해볼 수 있습니다
+ * 1. 현대 JS 엔진이 solution1의 if-else의 반복을 예측해
+ * 반복되는 패턴을 컴파일러가 더 효과적으로 최적화할 수 있습니다
+ * 2. solution2에 비해 solution1이 더 짧은 배열을 사용해 CPU 캐시를
+ * 더 효율적으로 활용할 수 있습니다
+ * 3. 더 큰 패턴 배열을 사용하는 것이 캐시 미스를 더 자주 발생시킬 수 있습니다
+ *
+ * 코드 일관성, 단순성, 유지보수성, 가독성 측면에서는 solution2가 더 낫기 때문에
+ * 실무에서 사용할 경우에는 solution2의 방식으로 하는 것이 낫고
+ * 실행시간과 메모리 사용에 제한이 있는 코딩테스트에서는
+ * 실행시간이 비교적 짧은 solution1의 방식이 낫습니다
  */

@@ -8,7 +8,7 @@ const solution1 = (N, stages) => {
 
   const tmp = {}; // {stage: 통과인원} 형태로 저장
 
-  stages.some((stage) => {
+  stages.some((stage) => { // O(m)
     if (stage > N) return false; // stage 이후 데이터 사용 시 stage 개수가 추가되는 경우가 있어 제외
     if (tmp[stage]) {
       // 이미 해당 stage에 대한 데이터가 있는 경우 +1
@@ -19,7 +19,7 @@ const solution1 = (N, stages) => {
     }
   });
 
-  for (let i = 1; i <= N; i++) {
+  for (let i = 1; i <= N; i++) { // O(n)
     // 실패율 계산 후 tmp stage에 재할당
     const percent = (tmp[i] || 0) / userCount;
     userCount -= tmp[i] || 0;
@@ -37,12 +37,12 @@ const solution2 = (N, stages) => {
 
   const percents = new Array(N).fill().map((_, idx) => [idx + 1, 0]); // [[1, 0], [2, 0], ...] 배열 생성
 
-  stages.some((stage) => {
+  stages.some((stage) => { // O(m)
     if (stage > N) return false;
     percents[stage - 1][1] += 1;
   });
 
-  for (let i = 0; i < N; i++) {
+  for (let i = 0; i < N; i++) { // O(n)
     const passedUsers = percents[i][1];
     const percent = passedUsers / userCount;
     userCount -= passedUsers;
@@ -79,4 +79,21 @@ testEx(6, solution2);
  * 더 좋은 방법인지 확실하게는알 수 없지만
  * 평균적으로는 오히려 1안의 경우가 미세하게
  * 실행 시간이 적게 걸리는 경우가 많았습니다
+ *
+ * + 250118
+ * 두 방법 다 O(n + m)의 시간복잡도를 갖지만
+ * solution1은 Object.entries를 사용해 약간의 오버헤드가
+ * 발생할 수 있어(객체 전체 순회 및 연산, 메모리 추가 사용)
+ * 미세하게 solution2가 더 효율적이라고합니다
+ *
+ * 다만 실제 측정 시간이 solution1이 더 빠를 수 있는 이유는
+ * some을 사용해 조기 종료가 가능한 점
+ * Object.entries가 V8 엔진의 최적화로 작은 데이터셋에서는
+ * 오히려 빠른 속도를 보일 수 있는 점
+ * solution1은 객체를 재사용하고 solution2는 새 배열을 생성해
+ * 오히려 오버헤드가 발생할 수 있다는 점
+ * 이 세 가지를 들 수 있습니다
+ *
+ * 메모리 측면에서는 작은 데이터셋에서는 큰 차이가 없지만
+ * 대규모 데이터의 경우 solution1의 방식이 더 유리할 수 있다고합니다
  */

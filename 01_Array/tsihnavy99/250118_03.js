@@ -6,11 +6,11 @@ const solution = (arr) => {
 
   for (let i = 0; i < arr.length; i++) {
     for (let j = i + 1; j < arr.length; j++) {
-      set.add(arr[i] + arr[j]); // 중복데이터가 아닌 값만 추가
+      set.add(arr[i] + arr[j]); // 중복데이터가 아닌 값만 추가 -> 중첩반복: O(n²)
     }
   }
 
-  return Array.from(set).sort((a, b) => a - b);
+  return Array.from(set).sort((a, b) => a - b); // Array.from: O(n), sort: O(nlogn)
 };
 
 testEx(3, solution);
